@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Palak Agarwal Portfolio</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+  <style>
+    * { margin:0; padding:0; box-sizing:border-box; font-family:'Poppins', sans-serif; }
+    body { background:#f0f9ff; color:#0f172a; scroll-behavior:smooth; }
+
+    header {
+      position:fixed; width:100%; top:0; left:0;
+      display:flex; justify-content:space-between; padding:20px 50px;
+      background:rgba(255,255,255,0.8); backdrop-filter:blur(10px);
+      z-index:1000;
+    }
+
+    header a { color:#0f172a; margin-left:20px; text-decoration:none; }
+
+    section { padding:100px 50px; min-height:100vh; }
+
+    .hero {
+      display:flex; align-items:center; justify-content:center;
+      gap:50px; flex-wrap:wrap;
+    }
+
+    .hero-text { max-width:500px; }
+
+    .hero h1 { font-size:40px; }
+    .hero p { margin-top:10px; font-size:18px; }
+
+    .hero-img img {
+      width:300px; height:300px;
+      object-fit:cover;
+      border-radius:20px;
+      box-shadow:0 10px 30px rgba(0,0,0,0.2);
+    }
+
+    .btn {
+      margin-top:20px; padding:10px 20px;
+      background:#38bdf8; border:none; color:white;
+      cursor:pointer; border-radius:5px;
+    }
+
+    h2 { margin-bottom:20px; font-size:32px; }
+
+    .skills .bar { margin-bottom:15px; }
+
+    .progress { height:10px; background:#bae6fd; border-radius:5px; overflow:hidden; }
+    .progress div { height:100%; background:#0284c7; animation:load 2s ease forwards; }
+
+    @keyframes load { from { width:0; } }
+
+    .certificates img {
+      width:150px; height:100px; object-fit:cover;
+      border-radius:10px; cursor:pointer;
+      margin:10px;
+      transition:0.3s;
+    }
+
+    .certificates img:hover { transform:scale(1.1); }
+
+    /* Popup */
+    .popup {
+      position:fixed; top:0; left:0; width:100%; height:100%;
+      background:rgba(0,0,0,0.8);
+      display:none; align-items:center; justify-content:center;
+    }
+
+    .popup img {
+      width:60%; border-radius:10px;
+    }
+
+    input, textarea {
+      width:100%; padding:10px; margin:10px 0;
+      border:1px solid #ccc; border-radius:5px;
+    }
+
+    footer { text-align:center; padding:20px; background:#e0f2fe; }
+
+    /* background animation */
+    .bg-animation span {
+      position:absolute; width:15px; height:15px;
+      background:#38bdf8;
+      animation:move 15s linear infinite;
+      border-radius:50%;
+    }
+
+    @keyframes move {
+      0% { transform:translateY(0); opacity:1; }
+      100% { transform:translateY(-1000px); opacity:0; }
+    }
+
+  </style>
+</head>
+<body>
+
+<header>
+  <h3>Palak Agarwal</h3>
+  <div>
+    <a href="#home">Home</a>
+    <a href="#about">About</a>
+    <a href="#skills">Skills</a>
+    <a href="#certificates">Certificates</a>
+    <a href="#contact">Contact</a>
+  </div>
+</header>
+
+<section class="hero" id="home">
+  <div class="hero-text">
+    <h1>Hello, I'm Palak Agarwal</h1>
+    <p>Web Developer | Designer | Student</p>
+    <button class="btn">Hire Me</button>
+  </div>
+
+  <div class="hero-img">
+    <img src="https://via.placeholder.com/300" alt="Profile">
+  </div>
+</section>
+
+<section id="about">
+  <h2>About Me</h2>
+  <p>Palak Agarwal is a passionate BCA student specializing in Cloud Computing. She is highly interested in modern technologies and enjoys building creative and efficient digital solutions. With a strong foundation in programming and web development, she is constantly learning and improving her skills. She aims to grow as a tech professional in the cloud domain..</p>
+</section>
+
+<section class="skills" id="skills">
+  <h2>Skills</h2>
+  <div class="bar"><span>HTML</span><div class="progress"><div style="width:90%"></div></div></div>
+  <div class="bar"><span>CSS</span><div class="progress"><div style="width:85%"></div></div></div>
+  <div class="bar"><span>JavaScript</span><div class="progress"><div style="width:75%"></div></div></div>
+</section>
+
+<section class="certificates" id="certificates">
+  <h2>Certificates</h2>
+  <img src="https://via.placeholder.com/300" onclick="openPopup(this.src)">
+  <img src="https://via.placeholder.com/300" onclick="openPopup(this.src)">
+</section>
+
+<div class="popup" id="popup" onclick="closePopup()">
+  <img id="popupImg">
+</div>
+
+
+
+<!-- FEEDBACK -->
+<section id="feedback">
+<div class="container card">
+<h2 class="section-title">Feedback</h2>
+
+<form class="feedback-form" id="feedbackForm">
+<input type="text" id="name" placeholder="Your Name" required>
+<input type="email" id="email" placeholder="Your Email" required>
+<textarea rows="4" id="message" placeholder="Your Feedback" required></textarea>
+<button type="submit">Submit Feedback</button>
+</form>
+
+<div class="feedback-status" id="status"></div>
+</div>
+</section>
+
+<footer style="text-align:center;padding:20px;color:var(--muted)">
+</footer>
+
+<script>
+/* 🔗 SUPABASE CONFIG */
+const supabaseUrl = "https://nozgjskfwzceoqbmqqrr.supabase.co";
+const supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5vemdqc2tmd3pjZW9xYm1xcXJyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzYzMjY0MTEsImV4cCI6MjA5MTkwMjQxMX0.lDJKNmXoJNdvkjHQRuqeqVUlom8VP2WTrgrrQYgZUwM";
+
+const supabaseClient = supabase.createClient(supabaseUrl, supabaseKey);
+
+/* 📨 FEEDBACK SUBMIT */
+document.getElementById("feedbackForm").addEventListener("submit", async (e) => {
+e.preventDefault();
+
+const status = document.getElementById("status");
+status.innerText = "Submitting...";
+
+const name = document.getElementById("name").value;
+const email = document.getElementById("email").value;
+const message = document.getElementById("message").value;
+
+const { error } = await supabaseClient
+.from("feedbacks")
+.insert([{ name, email, message }]);
+
+if (error) {
+status.innerText = "❌ Error submitting feedback";
+status.style.color = "red";
+} else {
+status.innerText = "✅ Feedback submitted successfully!";
+status.style.color = "#00d4ff";
+e.target.reset();
+}});
+</script>
+
+</body>
+</html>
+
+<footer>
+  <p>© 2026 Palak Agarwal</p>
+</footer>
+
+<script>
+function openPopup(src){
+  document.getElementById('popup').style.display='flex';
+  document.getElementById('popupImg').src=src;
+}
+function closePopup(){
+  document.getElementById('popup').style.display='none';
+}
+</script>
+
+</body>
+</html>
